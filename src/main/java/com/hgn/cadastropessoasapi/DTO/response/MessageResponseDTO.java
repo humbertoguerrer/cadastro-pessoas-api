@@ -1,4 +1,4 @@
-package com.hgn.cadastropessoasapi.DTO;
+package com.hgn.cadastropessoasapi.DTO.response;
 
 import lombok.Builder;
 import lombok.Data;
