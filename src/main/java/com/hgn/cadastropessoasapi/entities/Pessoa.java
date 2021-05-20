@@ -4,25 +4,33 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.yaml.snakeyaml.util.ArrayUtils;
 
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+@Entity
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class Pessoa {
 
-    private Long id;
-    private String nome;
-    private String sobrenome;
-    private String cpf;
-    private LocalDate nascimento;
-    private List<Telefone> telefones = new ArrayList<>();
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
+  @Column(nullable = false)
+  private String nome;
 
+  @Column(nullable = false)
+  private String sobrenome;
 
+  @Column(nullable = false, unique = true)
+  private String cpf;
 
+  private LocalDate nascimento;
+
+  @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
+  private List<Telefone> telefones = new ArrayList<>();
 }
