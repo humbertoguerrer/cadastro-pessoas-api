@@ -19,6 +19,13 @@ public class PessoaService {
 
 
     public MessageResponseDTO criarPessoa(PessoaDTO pessoaDTO) {
+
+        Pessoa pessoaSalvar = Pessoa.builder()
+                .nome(pessoaDTO.getNome())
+                .sobrenome(pessoaDTO.getSobrenome())
+                .nascimento(pessoaDTO.getNascimento())
+                .build();
+
         Pessoa pessoaSalva = pessoaRepository.save(pessoaDTO);
         return MessageResponseDTO.builder()
                 .mensagem("Criada pessoa com o ID " + pessoaSalva.getId())
