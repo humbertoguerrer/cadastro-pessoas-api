@@ -6,6 +6,7 @@ import com.hgn.cadastropessoasapi.entities.Pessoa;
 import com.hgn.cadastropessoasapi.exception.PessoaNaoEncontradaException;
 import com.hgn.cadastropessoasapi.mapper.PessoaMapper;
 import com.hgn.cadastropessoasapi.repositories.PessoaRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,16 +14,12 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@AllArgsConstructor(onConstructor = @__(@Autowired))
 public class PessoaService {
 
   private final PessoaMapper pessoaMapper = PessoaMapper.INSTANCE;
 
   private PessoaRepository pessoaRepository;
-
-  @Autowired
-  public PessoaService(PessoaRepository pessoaRepository) {
-    this.pessoaRepository = pessoaRepository;
-  }
 
   public MessageResponseDTO criarPessoa(PessoaDTO pessoaDTO) {
     Pessoa pessoa = pessoaMapper.toModel(pessoaDTO);

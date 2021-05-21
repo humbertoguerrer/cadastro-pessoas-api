@@ -2,27 +2,22 @@ package com.hgn.cadastropessoasapi.controllers;
 
 import com.hgn.cadastropessoasapi.DTO.request.PessoaDTO;
 import com.hgn.cadastropessoasapi.DTO.response.MessageResponseDTO;
-import com.hgn.cadastropessoasapi.entities.Pessoa;
 import com.hgn.cadastropessoasapi.exception.PessoaNaoEncontradaException;
 import com.hgn.cadastropessoasapi.services.PessoaService;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.security.MessageDigest;
 import java.util.List;
 
 @RestController
 @RequestMapping("/pessoas")
+@AllArgsConstructor(onConstructor = @__(@Autowired))
 public class PessoaController {
 
   private PessoaService pessoaService;
-
-  @Autowired
-  public PessoaController(PessoaService pessoaService) {
-    this.pessoaService = pessoaService;
-  }
 
   @PostMapping
   @ResponseStatus(HttpStatus.CREATED)
@@ -41,7 +36,8 @@ public class PessoaController {
   }
 
   @PutMapping("/{id}")
-  public MessageResponseDTO atualizarPorId(@PathVariable Long id, @RequestBody PessoaDTO pessoaDTO) throws PessoaNaoEncontradaException {
+  public MessageResponseDTO atualizarPorId(@PathVariable Long id, @RequestBody PessoaDTO pessoaDTO)
+      throws PessoaNaoEncontradaException {
     return pessoaService.atualizarPorId(id, pessoaDTO);
   }
 
