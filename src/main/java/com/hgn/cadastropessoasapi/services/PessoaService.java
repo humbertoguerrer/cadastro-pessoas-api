@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -39,10 +38,8 @@ public class PessoaService {
   }
 
   public PessoaDTO buscarPorId(Long id) throws PessoaNaoEncontradaException {
-    Optional<Pessoa> optionalPessoa = pessoaRepository.findById(id);
-    if (optionalPessoa.isEmpty()) {
-      throw new PessoaNaoEncontradaException(id);
-    }
-    return pessoaMapper.toDTO(optionalPessoa.get());
+    Pessoa pessoa =
+        pessoaRepository.findById(id).orElseThrow(() -> new PessoaNaoEncontradaException(id));
+    return pessoaMapper.toDTO(pessoa);
   }
 }
