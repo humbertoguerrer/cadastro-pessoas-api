@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping("/pessoas")
@@ -25,5 +26,10 @@ public class PessoaController {
   @ResponseStatus(HttpStatus.CREATED)
   public MessageResponseDTO criarPessoa(@RequestBody @Valid PessoaDTO pessoaDTO) {
     return pessoaService.criarPessoa(pessoaDTO);
+  }
+
+  @GetMapping
+  public List<PessoaDTO> listarTodas() {
+    return pessoaService.listarTodas();
   }
 }

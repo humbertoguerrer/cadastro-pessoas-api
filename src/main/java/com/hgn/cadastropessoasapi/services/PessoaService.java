@@ -8,6 +8,9 @@ import com.hgn.cadastropessoasapi.repositories.PessoaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 public class PessoaService {
 
@@ -26,5 +29,13 @@ public class PessoaService {
     return MessageResponseDTO.builder()
         .mensagem("Criada pessoa com o ID " + pessoaSalva.getId())
         .build();
+  }
+
+
+  public List<PessoaDTO> listarTodas() {
+    List<Pessoa> todasPessoas = pessoaRepository.findAll();
+    return todasPessoas.stream()
+            .map(pessoaMapper::toDTO)
+            .collect(Collectors.toList());
   }
 }
