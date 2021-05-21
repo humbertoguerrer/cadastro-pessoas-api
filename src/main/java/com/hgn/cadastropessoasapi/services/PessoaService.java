@@ -3,12 +3,14 @@ package com.hgn.cadastropessoasapi.services;
 import com.hgn.cadastropessoasapi.DTO.request.PessoaDTO;
 import com.hgn.cadastropessoasapi.DTO.response.MessageResponseDTO;
 import com.hgn.cadastropessoasapi.entities.Pessoa;
+import com.hgn.cadastropessoasapi.exception.PessoaNaoEncontradaException;
 import com.hgn.cadastropessoasapi.mapper.PessoaMapper;
 import com.hgn.cadastropessoasapi.repositories.PessoaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -31,11 +33,16 @@ public class PessoaService {
         .build();
   }
 
-
   public List<PessoaDTO> listarTodas() {
     List<Pessoa> todasPessoas = pessoaRepository.findAll();
-    return todasPessoas.stream()
-            .map(pessoaMapper::toDTO)
-            .collect(Collectors.toList());
+    return todasPessoas.stream().map(pessoaMapper::toDTO).collect(Collectors.toList());
+  }
+
+  public PessoaDTO buscarPorId(Long id) throws PessoaNaoEncontradaException {
+    Optional<Pessoa> optionalPessoa = pessoaRepository.findById(id);
+    if (optionalPessoa.isEmpty()) {
+      throw new PessoaNaoEncontradaException(id);
+    }
+    return pessoaMapper.toDTO(optionalPessoa.get());
   }
 }
