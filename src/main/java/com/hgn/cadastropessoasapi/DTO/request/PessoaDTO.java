@@ -31,7 +31,7 @@ public class PessoaDTO {
   @CPF
   private String cpf;
 
-  private LocalDate nascimento;
+  private String nascimento;
 
   @NotEmpty
   @Valid
